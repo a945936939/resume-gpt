@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { UserIcon, ComputerDesktopIcon } from "@heroicons/react/24/solid";
+import ReactMarkdown from "react-markdown";
 
 const ChatMessage = ({ message, isUser }) => {
   const messageVariants = {
@@ -56,7 +57,9 @@ const ChatMessage = ({ message, isUser }) => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3, delay: 0.2 }}
       >
-        <p className="text-sm md:text-base text-gray-100">{message}</p>
+        <div className="text-sm md:text-base text-gray-100 prose prose-invert max-w-none">
+          <ReactMarkdown>{message}</ReactMarkdown>
+        </div>
       </motion.div>
     </motion.div>
   );

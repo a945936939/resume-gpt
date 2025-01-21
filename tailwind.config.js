@@ -20,7 +20,38 @@ export default {
       animation: {
         "bounce-slow": "bounce 3s infinite",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: "inherit",
+            a: {
+              color: themeConfig.colors.accent.light,
+              "&:hover": {
+                color: themeConfig.colors.accent.default,
+              },
+            },
+            strong: {
+              color: "inherit",
+            },
+            code: {
+              color: themeConfig.colors.accent.light,
+            },
+            h1: {
+              color: "inherit",
+            },
+            h2: {
+              color: "inherit",
+            },
+            h3: {
+              color: "inherit",
+            },
+            h4: {
+              color: "inherit",
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
