@@ -5,6 +5,7 @@ import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import LoadingAnimation from "./ui/LoadingAnimation";
 import PropTypes from "prop-types";
+import { openaiConfig } from "../config/settings";
 
 const Chat = ({ resumeData, theme, config }) => {
   const openai = new OpenAI({
@@ -45,15 +46,15 @@ const Chat = ({ resumeData, theme, config }) => {
       setMessages((prev) => [...prev, { content: message, isUser: true }]);
 
       const response = await openai.chat.completions.create({
-        model: import.meta.env.VITE_OPENAI_MODEL,
+        model: openaiConfig.model,
         messages: [
           {
             role: "user",
             content: generatePrompt(message),
           },
         ],
-        temperature: parseFloat(import.meta.env.VITE_OPENAI_TEMPERATURE),
-        max_tokens: parseInt(import.meta.env.VITE_OPENAI_MAX_TOKENS),
+        temperature: openaiConfig.temperature,
+        max_tokens: openaiConfig.maxTokens,
       });
 
       const aiResponse = response.choices[0].message.content;
