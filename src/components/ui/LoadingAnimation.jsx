@@ -1,7 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
+// import { themeConfig } from "../../config/theme";
 
-const LoadingAnimation = () => {
+const LoadingAnimation = ({ theme }) => {
   const containerVariants = {
     start: {
       transition: {
@@ -33,7 +34,8 @@ const LoadingAnimation = () => {
 
   return (
     <motion.div
-      className="flex items-center gap-2 p-4 rounded-lg bg-accent-dark/50 backdrop-blur-sm"
+      className="flex items-center gap-2 p-4 rounded-lg backdrop-blur-sm"
+      style={{ backgroundColor: `${theme.animation.barColor}` }}
       variants={containerVariants}
       initial="start"
       animate="end"
@@ -41,7 +43,8 @@ const LoadingAnimation = () => {
       {[...Array(3)].map((_, i) => (
         <motion.span
           key={i}
-          className="w-3 h-3 bg-accent rounded-full"
+          className="w-3 h-3 rounded-full"
+          style={{ backgroundColor: theme.animation.animationColor }}
           variants={circleVariants}
           transition={{
             ...circleTransition,

@@ -1,6 +1,6 @@
 {
   "name": "resume-gpt-chat",
-  "version": "1.0.2",
+  "version": "1.1.1",
   "type": "module",
   "description": "A beautiful, customizable React component for creating AI-powered resume chat interfaces",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
   },
   "peerDependencies": {
     "@heroicons/react": "^2.1.1",
-    "framer-motion": "^10.18.0",
+    "framer-motion": "^10.18.0 || ^12.0.0",
     "openai": "^4.24.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

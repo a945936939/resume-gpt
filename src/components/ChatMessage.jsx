@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { UserIcon, ComputerDesktopIcon } from "@heroicons/react/24/solid";
 import ReactMarkdown from "react-markdown";
 
-const ChatMessage = ({ message, isUser }) => {
+const ChatMessage = ({ message, isUser, theme }) => {
   const messageVariants = {
     hidden: {
       opacity: 0,
@@ -16,8 +16,8 @@ const ChatMessage = ({ message, isUser }) => {
       scale: 1,
       transition: {
         type: "spring",
-        stiffness: 260,
-        damping: 20,
+        stiffness: theme.animation.stiffness,
+        damping: theme.animation.damping,
       },
     },
   };
@@ -29,8 +29,8 @@ const ChatMessage = ({ message, isUser }) => {
       rotate: 0,
       transition: {
         type: "spring",
-        stiffness: 260,
-        damping: 20,
+        stiffness: theme.animation.stiffness,
+        damping: theme.animation.damping,
       },
     },
   };
@@ -40,15 +40,37 @@ const ChatMessage = ({ message, isUser }) => {
       initial="hidden"
       animate="visible"
       variants={messageVariants}
-      className={`flex items-start gap-3 p-4 rounded-lg mb-4 max-w-[80%] 
-        ${isUser ? "ml-auto bg-primary-light" : "mr-auto bg-accent-dark"}
-        hover:shadow-lg hover:shadow-accent/5 transition-shadow duration-300`}
+      style={{
+        backgroundColor: isUser
+          ? theme.colors.background.message
+          : theme.colors.background.chat,
+        boxShadow: `0 4px 6px -1px ${
+          isUser
+            ? theme.colors.background.overlay + "40"
+            : theme.colors.background.chat + "40"
+        }`,
+      }}
+      className={`flex items-start gap-3 p-4 rounded-lg mb-4 max-w-[80%]
+        ${isUser ? "ml-auto" : "mr-auto"}
+        hover:shadow-lg transition-all duration-300 ease-in-out`}
     >
       <motion.div className="flex-shrink-0" variants={iconVariants}>
         {isUser ? (
-          <UserIcon className="h-6 w-6 text-accent" />
+          <UserIcon
+            className="h-6 w-6"
+            style={{
+              color: theme.colors.ui.icon,
+              filter: `drop-shadow(0 2px 4px ${theme.colors.background.overlay}40)`,
+            }}
+          />
         ) : (
-          <ComputerDesktopIcon className="h-6 w-6 text-accent-light" />
+          <ComputerDesktopIcon
+            className="h-6 w-6"
+            style={{
+              color: theme.colors.ui.icon,
+              filter: `drop-shadow(0 2px 4px ${theme.colors.background.overlay}40)`,
+            }}
+          />
         )}
       </motion.div>
       <motion.div
@@ -57,7 +79,14 @@ const ChatMessage = ({ message, isUser }) => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3, delay: 0.2 }}
       >
-        <div className="text-sm md:text-base text-gray-100 prose prose-invert max-w-none">
+        <div
+          className="prose prose-invert max-w-none"
+          style={{
+            color: theme.colors.text.primary,
+            fontSize: "0.95rem",
+            lineHeight: "1.5",
+          }}
+        >
           <ReactMarkdown>{message}</ReactMarkdown>
         </div>
       </motion.div>

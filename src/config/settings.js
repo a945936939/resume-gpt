@@ -26,4 +26,5 @@ export const animationConfig = {
   duration: 0.5,
   stiffness: 260,
   damping: 20,
+  barColor: themeColors.accent,
 };

@@ -35,5 +35,6 @@ export const themeConfig = {
     duration: animationConfig.duration,
     stiffness: animationConfig.stiffness,
     damping: animationConfig.damping,
+    barColor: animationConfig.barColor,
   },
 };

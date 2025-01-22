@@ -5,12 +5,20 @@ import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import LoadingAnimation from "./ui/LoadingAnimation";
 import PropTypes from "prop-types";
-import { openaiConfig } from "../config/settings";
 
-const Chat = ({ resumeData, theme, config }) => {
+const Chat = ({
+  resumeData,
+  theme,
+  config,
+  apiKey,
+  baseURL,
+  model,
+  temperature,
+  maxTokens,
+}) => {
   const openai = new OpenAI({
-    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-    baseURL: import.meta.env.VITE_OPENAI_BASE_URL,
+    apiKey,
+    baseURL,
     dangerouslyAllowBrowser: true,
   });
 
@@ -22,9 +30,13 @@ const Chat = ({ resumeData, theme, config }) => {
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -46,15 +58,15 @@ const Chat = ({ resumeData, theme, config }) => {
       setMessages((prev) => [...prev, { content: message, isUser: true }]);
 
       const response = await openai.chat.completions.create({
-        model: openaiConfig.model,
+        model,
         messages: [
           {
             role: "user",
             content: generatePrompt(message),
           },
         ],
-        temperature: openaiConfig.temperature,
-        max_tokens: openaiConfig.maxTokens,
+        temperature,
+        max_tokens: maxTokens,
       });
 
       const aiResponse = response.choices[0].message.content;
@@ -82,10 +94,19 @@ const Chat = ({ resumeData, theme, config }) => {
   return (
     <motion.div
       {...containerAnimation}
-      className="flex flex-col h-[calc(100vh-12rem)] max-w-3xl mx-auto bg-primary-dark rounded-lg shadow-xl overflow-hidden"
+      className="flex flex-col h-full max-w-3xl mx-auto rounded-lg shadow-xl overflow-hidden"
+      style={{
+        backgroundColor: theme.colors.background.chat,
+        boxShadow: `0 8px 32px -4px ${theme.colors.background.overlay}60`,
+      }}
     >
       <motion.div
-        className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-primary-light scrollbar-track-transparent"
+        ref={chatContainerRef}
+        className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar"
+        style={{
+          scrollbarColor: `${theme.colors.ui.scrollbar}40 ${theme.colors.background.overlay}80`,
+          backgroundColor: theme.colors.background.main,
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: theme.animation.duration * 0.6 }}
@@ -122,10 +143,14 @@ const Chat = ({ resumeData, theme, config }) => {
             </motion.div>
           )}
         </AnimatePresence>
-        <div ref={messagesEndRef} />
+        <div />
       </motion.div>
       <motion.div
-        className="p-4 bg-primary-light border-t border-primary"
+        className="p-4 border-t"
+        style={{
+          backgroundColor: theme.colors.background.input,
+          borderColor: theme.colors.ui.scrollbar + "20",
+        }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: theme.animation.duration }}
@@ -144,6 +169,11 @@ Chat.propTypes = {
   resumeData: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  apiKey: PropTypes.string,
+  baseURL: PropTypes.string,
+  model: PropTypes.string,
+  temperature: PropTypes.number,
+  maxTokens: PropTypes.number,
 };
 
 export default Chat;
