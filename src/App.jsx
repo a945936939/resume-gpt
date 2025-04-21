@@ -1,5 +1,8 @@
 import React from "react";
 import ResumeGPT from "./components/ResumeGPT";
+import { resumeData as defaultResumeData } from "./config/resume";
+import { theme as defaultTheme } from "./config/theme";
+import { config as defaultConfig } from "./config/settings";
 
 function App() {
   const resumeData = {
@@ -78,9 +81,26 @@ function App() {
       },
     ],
   };
-
+  const config = {
+    name: "Truman's GPT Assistant",
+    description: "I know everything about Truman, ask anything about him! ",
+    welcomeMessage:
+      "Hi! I'm Truman's AI resume assistant. Ask me anything about the Truman!",
+    errorMessage: "I'm sorry, I encountered an error. Please try again.",
+    inputPlaceholder: "Ask me anything about Truman's resume...",
+  };
   const theme = {
     colors: {
+      primary: {
+        default: "#1E293B",
+        light: "#334155",
+        dark: "#0F172A",
+      },
+      accent: {
+        default: "#38BDF8",
+        light: "#7DD3FC",
+        dark: "#0284C7",
+      },
       background: {
         main: "#1E293B", // Main app background
         chat: "#2e395f", // Chat container background
@@ -110,28 +130,19 @@ function App() {
     },
   };
 
-  const config = {
-    name: "Truman's GPT Assistant",
-    description: "I know everything about Truman, ask anything about him! ",
-    welcomeMessage:
-      "Hi! I'm Truman's AI resume assistant. Ask me anything about the Truman!",
-    errorMessage: "I'm sorry, I encountered an error. Please try again.",
-    inputPlaceholder: "Ask me anything about Truman's resume...",
-  };
-
   return (
     <div className="min-h-screen h-[1800px] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 flex items-center justify-center">
       <ResumeGPT
-        resumeData={resumeData}
-        theme={theme}
-        config={config}
+        resumeData={resumeData || defaultResumeData}
+        theme={theme || defaultTheme}
+        config={config || defaultConfig}
         apiKey={import.meta.env.VITE_OPENAI_API_KEY}
         baseURL={import.meta.env.VITE_OPENAI_BASE_URL}
         model={import.meta.env.VITE_OPENAI_MODEL || "gpt-3.5-turbo"}
-        temperature={0.7}
+        temperature={1.3}
         maxTokens={2000}
-        height="300px"
-        width="300px"
+        height="500px"
+        width="500px"
         className="max-w-full"
       />
       //{" "}

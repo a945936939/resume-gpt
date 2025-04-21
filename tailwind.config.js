@@ -1,4 +1,4 @@
-import { themeConfig } from "./src/config/theme";
+import { theme } from "./src/config/theme";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,14 +7,14 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: themeConfig.colors.primary.default,
-          light: themeConfig.colors.primary.light,
-          dark: themeConfig.colors.primary.dark,
+          DEFAULT: theme.colors.primary.default,
+          light: theme.colors.primary.light,
+          dark: theme.colors.primary.dark,
         },
         accent: {
-          DEFAULT: themeConfig.colors.accent.default,
-          light: themeConfig.colors.accent.light,
-          dark: themeConfig.colors.accent.dark,
+          DEFAULT: theme.colors.accent.default,
+          light: theme.colors.accent.light,
+          dark: theme.colors.accent.dark,
         },
       },
       animation: {
@@ -25,16 +25,16 @@ export default {
           css: {
             color: "inherit",
             a: {
-              color: themeConfig.colors.accent.light,
+              color: theme.colors.accent.light,
               "&:hover": {
-                color: themeConfig.colors.accent.default,
+                color: theme.colors.accent.default,
               },
             },
             strong: {
               color: "inherit",
             },
             code: {
-              color: themeConfig.colors.accent.light,
+              color: theme.colors.accent.light,
             },
             h1: {
               color: "inherit",

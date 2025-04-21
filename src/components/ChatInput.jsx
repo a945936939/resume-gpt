@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import Input from "./ui/Input";
-import { themeConfig } from "../config/theme";
+import { theme as themeConfig } from "../config/theme";
 
 const ChatInput = ({ onSendMessage, theme, placeholder }) => {
   const [message, setMessage] = useState("");

@@ -1,10 +1,10 @@
 # Resume GPT Chat
 
-A beautiful, customizable React component for creating AI-powered resume chat interfaces. This package provides a complete solution for building resume chatbots with OpenAI integration, beautiful animations, and a modern UI.
+A beautiful, customizable React component for creating AI-powered resume chat interfaces. This package provides a complete solution for building resume chatbots with DeepSeek integration, beautiful animations, and a modern UI.
 
 ## Features
 
-- 🤖 OpenAI-powered chat interface
+- 🤖 DeepSeek-powered chat interface
 - 🎨 Beautiful UI with Tailwind CSS
 - ✨ Smooth animations with Framer Motion
 - 📱 Fully responsive design
@@ -54,7 +54,7 @@ module.exports = {
 @tailwind utilities;
 ```
 
-4. Set up your environment variables (create a .env file):
+4. Set up your environment variables (create a .env file), I used DeepSeek AI, feel free to use ChatGPT, which is also compatible:
 
 ```env
 OPENAI_API_KEY=your_api_key_here
@@ -62,12 +62,15 @@ OPENAI_API_KEY=your_api_key_here
 
 ## Usage
 
+**_Please note that if the following code is not found in your project, the default resume data will be used._**
+
 Here's a complete example of how to use the ResumeGPT component:
 
 ```jsx
 import { ResumeGPT } from "resume-gpt-chat";
 
 // Your resume data in JSON format
+
 const resumeData = {
   basics: {
     name: "John Doe",
@@ -103,34 +106,63 @@ const resumeData = {
   ],
 };
 
-// Optional theme customization
+//  theme customization
 const theme = {
   colors: {
-    primary: {
-      default: "#0f172a",
-      light: "#1e293b",
-      dark: "#020617",
+    background: {
+      main: "#1E293B", // Main app background
+      chat: "#2e395f", // Chat container background
+      message: "#334155", // Message background
+      input: "#475569", // Input field background
+      overlay: "#020617", // Overlay/modal background
     },
-    accent: {
-      default: "#38bdf8",
-      light: "#7dd3fc",
-      dark: "#0284c7",
+    ui: {
+      title: "#F8FAFC", // Title text
+      description: "#94A3B8", // App description text
+      scrollbar: "#64748B", // Borders and dividers
+      icon: "#94A3B8", // Icons and decorative elements
+      hover: "#E2E8F0", // Hover states and interactions
+    },
+    text: {
+      primary: "#F8FAFC", // Main text in messages
+      secondary: "#CBD5E1", // Secondary text
+      placeholder: "#94A3B8", // Input placeholder text
     },
   },
   animation: {
     duration: 0.5,
     stiffness: 260,
     damping: 20,
+    animationColor: "#9aA3B8",
+    barColor: "#2e395f",
   },
+};
+
+const config = {
+  name: "Truman's GPT Assistant",
+  description: "I know everything about Truman, ask anything about him! ",
+  welcomeMessage:
+    "Hi! I'm Truman's AI resume assistant. Ask me anything about the Truman!",
+  errorMessage: "I'm sorry, I encountered an error. Please try again.",
+  inputPlaceholder: "Ask me anything about Truman's resume...",
 };
 
 function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <ResumeGPT
-        resumeData={resumeData}
-        theme={theme} // Optional
-      />
+        <ResumeGPT
+            resumeData={resumeData} // if not found, use default resume data
+            theme={theme} // if not found, use default theme
+            config={config} // if not found, use default config
+            apiKey={process.env.NEXT_PUBLIC_VITE_OPENAI_API_KEY} //use your own api key
+            baseURL={process.env.NEXT_PUBLIC_VITE_OPENAI_BASE_URL} //use your own base url
+            model="deepseek-chat" //use your own model, if not found, use default model gpt-3.5-turbo
+            temperature={1.3} //use your own temperature
+            maxTokens={200} //use your own maxTokens
+            width="500px" //use your own width, cannot be less than 500px
+            height="500px" //use your own height, cannot be less than 500px
+          />
     </div>
   );
 }
@@ -153,36 +185,8 @@ The `resumeData` prop follows the [JSON Resume Schema](https://jsonresume.org/sc
 - awards
 - publications
 
-### Theme Customization
-
-The `theme` prop allows you to customize:
-
-```js
-{
-  colors: {
-    primary: {
-      default: string,
-      light: string,
-      dark: string,
-    },
-    accent: {
-      default: string,
-      light: string,
-      dark: string,
-    }
-  },
-  animation: {
-    duration: number,
-    stiffness: number,
-    damping: number,
-  }
-}
-```
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
-
-MIT © [Your Name]
+# 💗 From Truman
